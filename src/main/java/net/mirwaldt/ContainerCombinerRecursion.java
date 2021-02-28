@@ -4,26 +4,30 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
+import java.util.function.Predicate;
 
-public class ContainerCombinerRecursion<IntermediateResultType, FinalResultType> {
+public class ContainerCombinerRecursion<FinalResultType> {
     private final BiFunction<List<Integer>, Integer, List<Integer>> optimizeNewRemainingContainersFunction;
-    private final BiConsumer<IntermediateResultType, FinalResultType> intermediateResultConsumer;
-    private final BiFunction<IntermediateResultType, Integer, IntermediateResultType> intermediateResultOperator;
+    private final Predicate<List<Integer>> stopPredicate;
+    private final BiConsumer<List<Integer>, FinalResultType> intermediateResultConsumer;
+    private final BiFunction<List<Integer>, Integer, List<Integer>> intermediateResultOperator;
 
     public ContainerCombinerRecursion(
             BiFunction<List<Integer>, Integer, List<Integer>> optimizeNewRemainingContainersFunction,
-            BiConsumer<IntermediateResultType, FinalResultType> intermediateResultConsumer,
-            BiFunction<IntermediateResultType, Integer, IntermediateResultType> intermediateResultOperator) {
+            Predicate<List<Integer>> stopPredicate,
+            BiConsumer<List<Integer>, FinalResultType> intermediateResultConsumer,
+            BiFunction<List<Integer>, Integer, List<Integer>> intermediateResultOperator) {
         this.optimizeNewRemainingContainersFunction = optimizeNewRemainingContainersFunction;
+        this.stopPredicate = stopPredicate;
         this.intermediateResultConsumer = intermediateResultConsumer;
         this.intermediateResultOperator = intermediateResultOperator;
     }
 
     protected void combineRecursively(List<Integer> remainingContainers, int remainingAmount,
-                                      IntermediateResultType intermediateResult, FinalResultType finalResult) {
+                                      List<Integer> combination, FinalResultType finalResult) {
         if (remainingAmount == 0) {
-            intermediateResultConsumer.accept(intermediateResult, finalResult);
-        } else {
+            intermediateResultConsumer.accept(combination, finalResult);
+        } else if(!stopPredicate.test(remainingContainers)) {
             for (int i = 0; i < remainingContainers.size(); i++) {
                 int containerCapacity = remainingContainers.get(i);
                 if (containerCapacity <= remainingAmount) {
@@ -33,9 +37,9 @@ public class ContainerCombinerRecursion<IntermediateResultType, FinalResultType>
                     newRemainingContainers =
                             optimizeNewRemainingContainersFunction.apply(newRemainingContainers, newRemainingAmount);
 
-                    IntermediateResultType newIntermediateResult =
-                            intermediateResultOperator.apply(intermediateResult, containerCapacity);
-                    combineRecursively(newRemainingContainers, newRemainingAmount, newIntermediateResult, finalResult);
+                    List<Integer> newCombination =
+                            intermediateResultOperator.apply(combination, containerCapacity);
+                    combineRecursively(newRemainingContainers, newRemainingAmount, newCombination, finalResult);
                 }
             }
         }

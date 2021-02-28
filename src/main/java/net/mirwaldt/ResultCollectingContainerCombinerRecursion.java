@@ -5,10 +5,11 @@ import java.util.List;
 import java.util.function.BiFunction;
 
 public class ResultCollectingContainerCombinerRecursion
-        extends ContainerCombinerRecursion<List<Integer>, List<List<Integer>>> {
+        extends ContainerCombinerRecursion<List<List<Integer>>> {
     public ResultCollectingContainerCombinerRecursion(
             BiFunction<List<Integer>, Integer, List<Integer>> optimizeNewRemainingContainersFunction) {
         super(optimizeNewRemainingContainersFunction,
+                (combination) -> false,
                 ResultCollectingContainerCombinerRecursion::addIntermediateResult,
                 ResultCollectingContainerCombinerRecursion::extendCombination);
     }

@@ -4,19 +4,20 @@ import java.util.List;
 import java.util.function.BiFunction;
 
 public class ResultCountingContainerCombinerRecursion
-        extends ContainerCombinerRecursion<Object, int[]> {
+        extends ContainerCombinerRecursion<int[]> {
     public ResultCountingContainerCombinerRecursion(
             BiFunction<List<Integer>, Integer, List<Integer>> optimizeNewRemainingContainersFunction) {
         super(optimizeNewRemainingContainersFunction,
+                (combination) -> false,
                 ResultCountingContainerCombinerRecursion::addIntermediateResult,
                 ResultCountingContainerCombinerRecursion::extendCombination);
     }
 
-    private static void addIntermediateResult(Object combination, int[] combinationsCount) {
+    private static void addIntermediateResult(List<Integer> combination, int[] combinationsCount) {
         combinationsCount[0]++;
     }
 
-    private static Object extendCombination(Object combination, Integer capacity) {
+    private static List<Integer> extendCombination(List<Integer> combination, Integer capacity) {
         return null;
     }
 }
