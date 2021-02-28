@@ -1,5 +1,6 @@
 package net.mirwaldt;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -18,5 +19,12 @@ public class ContainerCombinerUtils {
 
     public static List<Integer> dontOptimize(List<Integer> newRemainingContainers, int newRemainingAmount) {
         return newRemainingContainers;
+    }
+
+
+    public static List<Integer> extendCombination(List<Integer> combination, Integer capacity) {
+        final List<Integer> newCombination = new ArrayList<>(combination);
+        newCombination.add(capacity);
+        return newCombination;
     }
 }

@@ -10,7 +10,6 @@ public abstract class AbstractContainerCombiner implements ContainerCombiner {
         final List<Integer> sortedContainers = new ArrayList<>(capacities);
         Collections.sort(sortedContainers);
         final int[] counter = new int[] { 0 };
-
         final ResultCountingContainerCombinerRecursion containerCombinerRecursion =
                 new ResultCountingContainerCombinerRecursion(this::optimizeNewRemainingContainers);
         containerCombinerRecursion.combineRecursively(sortedContainers, amount, null, counter);

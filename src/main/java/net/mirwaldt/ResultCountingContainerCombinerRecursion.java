@@ -7,17 +7,25 @@ public class ResultCountingContainerCombinerRecursion
         extends ContainerCombinerRecursion<int[]> {
     public ResultCountingContainerCombinerRecursion(
             BiFunction<List<Integer>, Integer, List<Integer>> optimizeNewRemainingContainersFunction) {
-        super(optimizeNewRemainingContainersFunction,
-                (combination, finalResult) -> false,
-                ResultCountingContainerCombinerRecursion::addIntermediateResult,
-                ResultCountingContainerCombinerRecursion::extendCombination);
+        super(optimizeNewRemainingContainersFunction);
     }
 
-    private static void addIntermediateResult(List<Integer> combination, int[] combinationsCount) {
-        combinationsCount[0]++;
+    @Override
+    protected void consumeIntermediateResult(List<Integer> combination, int[] count) {
+        addIntermediateResult(combination, count);
     }
 
-    private static List<Integer> extendCombination(List<Integer> combination, Integer capacity) {
+    @Override
+    protected List<Integer> createCombination(List<Integer> combination, Integer capacity) {
         return null;
+    }
+
+    @Override
+    protected boolean accept(List<Integer> combination, int[] combinations) {
+        return true;
+    }
+
+    private void addIntermediateResult(List<Integer> combination, int[] combinationsCount) {
+        combinationsCount[0]++;
     }
 }
