@@ -8,7 +8,7 @@ public class ResultCountingContainerCombinerRecursion
     public ResultCountingContainerCombinerRecursion(
             BiFunction<List<Integer>, Integer, List<Integer>> optimizeNewRemainingContainersFunction) {
         super(optimizeNewRemainingContainersFunction,
-                (combination) -> false,
+                (combination, finalResult) -> false,
                 ResultCountingContainerCombinerRecursion::addIntermediateResult,
                 ResultCountingContainerCombinerRecursion::extendCombination);
     }

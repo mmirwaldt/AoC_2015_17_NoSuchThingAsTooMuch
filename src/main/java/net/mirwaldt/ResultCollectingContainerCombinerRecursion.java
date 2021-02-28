@@ -9,7 +9,7 @@ public class ResultCollectingContainerCombinerRecursion
     public ResultCollectingContainerCombinerRecursion(
             BiFunction<List<Integer>, Integer, List<Integer>> optimizeNewRemainingContainersFunction) {
         super(optimizeNewRemainingContainersFunction,
-                (combination) -> false,
+                (combination, finalResult) -> false,
                 ResultCollectingContainerCombinerRecursion::addIntermediateResult,
                 ResultCollectingContainerCombinerRecursion::extendCombination);
     }
@@ -18,10 +18,9 @@ public class ResultCollectingContainerCombinerRecursion
         combinations.add(combination);
     }
 
-    private static List<Integer> extendCombination(List<Integer> combination, Integer capacity) {
+    public static List<Integer> extendCombination(List<Integer> combination, Integer capacity) {
         final List<Integer> newCombination = new ArrayList<>(combination);
         newCombination.add(capacity);
         return newCombination;
     }
-
 }

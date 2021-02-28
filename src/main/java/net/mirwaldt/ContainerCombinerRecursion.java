@@ -4,17 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
+import java.util.function.BiPredicate;
 import java.util.function.Predicate;
 
 public class ContainerCombinerRecursion<FinalResultType> {
     private final BiFunction<List<Integer>, Integer, List<Integer>> optimizeNewRemainingContainersFunction;
-    private final Predicate<List<Integer>> stopPredicate;
+    private final BiPredicate<List<Integer>, FinalResultType> stopPredicate;
     private final BiConsumer<List<Integer>, FinalResultType> intermediateResultConsumer;
     private final BiFunction<List<Integer>, Integer, List<Integer>> intermediateResultOperator;
 
     public ContainerCombinerRecursion(
             BiFunction<List<Integer>, Integer, List<Integer>> optimizeNewRemainingContainersFunction,
-            Predicate<List<Integer>> stopPredicate,
+            BiPredicate<List<Integer>, FinalResultType> stopPredicate,
             BiConsumer<List<Integer>, FinalResultType> intermediateResultConsumer,
             BiFunction<List<Integer>, Integer, List<Integer>> intermediateResultOperator) {
         this.optimizeNewRemainingContainersFunction = optimizeNewRemainingContainersFunction;
@@ -27,7 +28,7 @@ public class ContainerCombinerRecursion<FinalResultType> {
                                       List<Integer> combination, FinalResultType finalResult) {
         if (remainingAmount == 0) {
             intermediateResultConsumer.accept(combination, finalResult);
-        } else if(!stopPredicate.test(remainingContainers)) {
+        } else if(!stopPredicate.test(remainingContainers, finalResult)) {
             for (int i = 0; i < remainingContainers.size(); i++) {
                 int containerCapacity = remainingContainers.get(i);
                 if (containerCapacity <= remainingAmount) {
