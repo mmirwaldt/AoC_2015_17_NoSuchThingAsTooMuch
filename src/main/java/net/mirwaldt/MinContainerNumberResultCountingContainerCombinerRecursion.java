@@ -3,29 +3,33 @@ package net.mirwaldt;
 import java.util.List;
 import java.util.function.BiFunction;
 
-public class ResultCountingContainerCombinerRecursion
+import static net.mirwaldt.ContainerCombinerUtils.extendCombination;
+
+public class MinContainerNumberResultCountingContainerCombinerRecursion
         extends ContainerCombinerRecursion<int[]> {
-    public ResultCountingContainerCombinerRecursion(
+    private final int minContainerNumber;
+
+    public MinContainerNumberResultCountingContainerCombinerRecursion(
+            int minContainerNumber,
             BiFunction<List<Integer>, Integer, List<Integer>> optimizeNewRemainingContainersFunction) {
         super(optimizeNewRemainingContainersFunction);
+        this.minContainerNumber = minContainerNumber;
     }
 
     @Override
     protected void consumeIntermediateResult(List<Integer> combination, int[] count) {
-        addIntermediateResult(combination, count);
+        if(minContainerNumber == combination.size()) {
+            count[0]++;
+        }
     }
 
     @Override
     protected List<Integer> createNewCombination(List<Integer> combination, Integer capacity) {
-        return null;
+        return extendCombination(combination, capacity);
     }
 
     @Override
     protected boolean accept(List<Integer> combination, int[] combinations) {
-        return true;
-    }
-
-    private void addIntermediateResult(List<Integer> combination, int[] combinationsCount) {
-        combinationsCount[0]++;
+        return combination.size() < minContainerNumber;
     }
 }

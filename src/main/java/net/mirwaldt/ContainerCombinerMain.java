@@ -11,7 +11,11 @@ public class ContainerCombinerMain {
     public static void main(String[] args) throws IOException {
         final List<String> lines = Files.readAllLines(Path.of("input.txt"), StandardCharsets.US_ASCII);
         final List<Integer> capacities = lines.stream().map(Integer::parseInt).collect(Collectors.toList());
-        final ContainerCombiner containerCombiner = new DefaultContainerCombiner();
-        System.out.println(containerCombiner.countCombinations(capacities, 150)); // result: 1304
+
+        final ContainerCombiner partOneContainerCombiner = new OptimizedContainerCombiner();
+        System.out.println(partOneContainerCombiner.countCombinations(capacities, 150)); // result: 1304
+
+        final ContainerCombiner partTwoContainerCombiner = new MinContainerNumberCombinationsContainerCombiner();
+        System.out.println(partTwoContainerCombiner.countCombinations(capacities, 150)); // result: 18
     }
 }

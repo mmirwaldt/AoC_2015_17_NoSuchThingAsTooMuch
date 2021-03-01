@@ -10,7 +10,7 @@ import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class ContainerCombinerTest {
+public class PartOneContainerCombinerTest {
     private static Stream<Arguments> containerCombiner() {
         return Stream.of(Arguments.of(new DefaultContainerCombiner()),Arguments.of(new OptimizedContainerCombiner()));
     }

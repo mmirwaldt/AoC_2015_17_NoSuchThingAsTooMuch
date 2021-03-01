@@ -16,7 +16,7 @@ public abstract class ContainerCombinerRecursion<FinalResultType> {
                                       List<Integer> combination, FinalResultType finalResult) {
         if (remainingAmount == 0) {
             consumeIntermediateResult(combination, finalResult);
-        } else if(accept(remainingContainers, finalResult)) {
+        } else if(accept(combination, finalResult)) {
             for (int i = 0; i < remainingContainers.size(); i++) {
                 int containerCapacity = remainingContainers.get(i);
                 if (containerCapacity <= remainingAmount) {
@@ -26,7 +26,7 @@ public abstract class ContainerCombinerRecursion<FinalResultType> {
                     newRemainingContainers =
                             optimizeNewRemainingContainersFunction.apply(newRemainingContainers, newRemainingAmount);
 
-                    List<Integer> newCombination = createCombination(combination, containerCapacity);
+                    final List<Integer> newCombination = createNewCombination(combination, containerCapacity);
                     combineRecursively(newRemainingContainers, newRemainingAmount, newCombination, finalResult);
                 }
             }
@@ -34,6 +34,6 @@ public abstract class ContainerCombinerRecursion<FinalResultType> {
     }
 
     protected abstract void consumeIntermediateResult(List<Integer> combination, FinalResultType combinations);
-    protected abstract List<Integer> createCombination(List<Integer> combination, Integer capacity);
+    protected abstract List<Integer> createNewCombination(List<Integer> combination, Integer capacity);
     protected abstract boolean accept(List<Integer> combination, FinalResultType combinations);
 }
