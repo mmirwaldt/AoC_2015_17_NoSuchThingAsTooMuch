@@ -17,7 +17,7 @@ public class MinContainerNumberCombinationsContainerCombiner implements Containe
         final int[] counter = new int[]{0};
         final MinContainerNumberResultCountingContainerCombinerRecursion containerCombinerRecursion =
                 new MinContainerNumberResultCountingContainerCombinerRecursion(
-                        minContainerNumber[0], ContainerCombinerUtils::dontOptimize);
+                        minContainerNumber[0], ContainerCombinerUtils::optimize);
         containerCombinerRecursion.combineRecursively(sortedContainers, amount, Collections.emptyList(), counter);
         return counter[0];
     }
@@ -31,7 +31,7 @@ public class MinContainerNumberCombinationsContainerCombiner implements Containe
 
         final MinContainerNumberResultCollectingContainerCombinerRecursion containerCombinerRecursion =
                 new MinContainerNumberResultCollectingContainerCombinerRecursion(
-                        minContainerNumber[0], ContainerCombinerUtils::dontOptimize);
+                        minContainerNumber[0], ContainerCombinerUtils::optimize);
         final List<List<Integer>> combinations = new ArrayList<>();
         containerCombinerRecursion.combineRecursively(sortedContainers, amount, Collections.emptyList(), combinations);
         return combinations;
@@ -40,7 +40,7 @@ public class MinContainerNumberCombinationsContainerCombiner implements Containe
     private int[] findMinContainerNumber(int amount, List<Integer> sortedContainers) {
         final int[] minContainerNumber = new int[]{Integer.MAX_VALUE};
         MinContainerNumberCombinerRecursion minContainerNumberCombinerRecursion =
-                new MinContainerNumberCombinerRecursion(ContainerCombinerUtils::dontOptimize);
+                new MinContainerNumberCombinerRecursion(ContainerCombinerUtils::optimize);
         minContainerNumberCombinerRecursion.combineRecursively(sortedContainers, amount, Collections.emptyList(), minContainerNumber);
         lastMinContainerNumber = minContainerNumber[0];
         return minContainerNumber;
