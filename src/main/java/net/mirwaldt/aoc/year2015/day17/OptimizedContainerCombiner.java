@@ -1,13 +1,11 @@
-package net.mirwaldt;
+package net.mirwaldt.aoc.year2015.day17;
 
 import java.util.List;
-
-import static net.mirwaldt.ContainerCombinerUtils.optimize;
 
 public class OptimizedContainerCombiner extends AbstractContainerCombiner {
     @Override
     protected List<Integer> optimizeNewRemainingContainers(
             List<Integer> newRemainingContainers, int newRemainingAmount) {
-        return optimize(newRemainingContainers, newRemainingAmount);
+        return ContainerCombinerUtils.optimize(newRemainingContainers, newRemainingAmount);
     }
 }

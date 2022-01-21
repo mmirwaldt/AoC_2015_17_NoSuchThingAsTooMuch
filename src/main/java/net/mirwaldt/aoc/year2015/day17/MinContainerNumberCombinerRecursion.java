@@ -1,10 +1,9 @@
-package net.mirwaldt;
+package net.mirwaldt.aoc.year2015.day17;
 
 import java.util.List;
 import java.util.function.BiFunction;
 
 import static java.lang.Math.min;
-import static net.mirwaldt.ContainerCombinerUtils.extendCombination;
 
 public class MinContainerNumberCombinerRecursion extends ContainerCombinerRecursion<int[]>{
     public MinContainerNumberCombinerRecursion(
@@ -19,7 +18,7 @@ public class MinContainerNumberCombinerRecursion extends ContainerCombinerRecurs
 
     @Override
     protected List<Integer> createNewCombination(List<Integer> combination, Integer capacity) {
-        return extendCombination(combination, capacity);
+        return ContainerCombinerUtils.extendCombination(combination, capacity);
     }
 
     @Override

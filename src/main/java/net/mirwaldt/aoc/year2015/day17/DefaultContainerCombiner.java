@@ -1,8 +1,8 @@
-package net.mirwaldt;
+package net.mirwaldt.aoc.year2015.day17;
 
 import java.util.List;
 
-import static net.mirwaldt.ContainerCombinerUtils.dontOptimize;
+import static net.mirwaldt.aoc.year2015.day17.ContainerCombinerUtils.dontOptimize;
 
 public class DefaultContainerCombiner extends AbstractContainerCombiner {
     @Override

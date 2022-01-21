@@ -1,26 +1,20 @@
-package net.mirwaldt;
+package net.mirwaldt.aoc.year2015.day17;
 
 import java.util.List;
 import java.util.function.BiFunction;
 
-import static net.mirwaldt.ContainerCombinerUtils.extendCombination;
+import static net.mirwaldt.aoc.year2015.day17.ContainerCombinerUtils.extendCombination;
 
-public class MinContainerNumberResultCollectingContainerCombinerRecursion
+public class ResultCollectingContainerCombinerRecursion
         extends ContainerCombinerRecursion<List<List<Integer>>> {
-    private final int minContainerNumber;
-
-    public MinContainerNumberResultCollectingContainerCombinerRecursion(
-            int minContainerNumber,
+    public ResultCollectingContainerCombinerRecursion(
             BiFunction<List<Integer>, Integer, List<Integer>> optimizeNewRemainingContainersFunction) {
         super(optimizeNewRemainingContainersFunction);
-        this.minContainerNumber = minContainerNumber;
     }
 
     @Override
     protected void consumeIntermediateResult(List<Integer> combination, List<List<Integer>> combinations) {
-        if(minContainerNumber == combination.size()) {
-            addIntermediateResult(combination, combinations);
-        }
+        addIntermediateResult(combination, combinations);
     }
 
     @Override
@@ -30,7 +24,7 @@ public class MinContainerNumberResultCollectingContainerCombinerRecursion
 
     @Override
     protected boolean accept(List<Integer> combination, List<List<Integer>> combinations) {
-        return combination.size() < minContainerNumber;
+        return true;
     }
 
     private void addIntermediateResult(List<Integer> combination, List<List<Integer>> combinations) {

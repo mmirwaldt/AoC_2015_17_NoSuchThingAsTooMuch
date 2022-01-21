@@ -1,35 +1,31 @@
-package net.mirwaldt;
+package net.mirwaldt.aoc.year2015.day17;
 
 import java.util.List;
 import java.util.function.BiFunction;
 
-import static net.mirwaldt.ContainerCombinerUtils.extendCombination;
-
-public class MinContainerNumberResultCountingContainerCombinerRecursion
+public class ResultCountingContainerCombinerRecursion
         extends ContainerCombinerRecursion<int[]> {
-    private final int minContainerNumber;
-
-    public MinContainerNumberResultCountingContainerCombinerRecursion(
-            int minContainerNumber,
+    public ResultCountingContainerCombinerRecursion(
             BiFunction<List<Integer>, Integer, List<Integer>> optimizeNewRemainingContainersFunction) {
         super(optimizeNewRemainingContainersFunction);
-        this.minContainerNumber = minContainerNumber;
     }
 
     @Override
     protected void consumeIntermediateResult(List<Integer> combination, int[] count) {
-        if(minContainerNumber == combination.size()) {
-            count[0]++;
-        }
+        addIntermediateResult(combination, count);
     }
 
     @Override
     protected List<Integer> createNewCombination(List<Integer> combination, Integer capacity) {
-        return extendCombination(combination, capacity);
+        return null;
     }
 
     @Override
     protected boolean accept(List<Integer> combination, int[] combinations) {
-        return combination.size() < minContainerNumber;
+        return true;
+    }
+
+    private void addIntermediateResult(List<Integer> combination, int[] combinationsCount) {
+        combinationsCount[0]++;
     }
 }
